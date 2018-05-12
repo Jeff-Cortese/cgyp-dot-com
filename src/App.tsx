@@ -4,8 +4,9 @@ import './App.css';
 
 class App extends React.Component {
   public componentDidMount() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     this.setState({
-      isPlaying: true
+      isPlaying: !isMobile
     });
   }
 
