@@ -1,8 +1,31 @@
 import * as React from 'react';
-import { findDOMNode } from 'react-dom';
 import './App.css';
 
-class App extends React.Component {
+interface IAppState {
+  isPlaying: boolean;
+}
+
+class App extends React.Component<{}, IAppState> {
+  public log = console.log;
+  private dodo: HTMLAudioElement;
+
+  public onAppClick = () => {
+    const { isPlaying } = this.state;
+    if (isPlaying) {
+      this.dodo.pause();
+    } else {
+      this.dodo.play();
+    }
+
+    this.setState({
+      isPlaying: !isPlaying
+    })
+  }
+
+  public setDodo = (el: HTMLAudioElement) => {
+    this.dodo = el;
+  }
+
   public componentDidMount() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     this.setState({
@@ -10,23 +33,9 @@ class App extends React.Component {
     });
   }
 
-  public onAppClick() {
-    const dodo: any = findDOMNode(this.refs.dodo);
-    const state: any = this.state;
-    if (state.isPlaying) {
-      dodo.pause();
-    } else {
-      dodo.play();
-    }
-
-    this.setState({
-      isPlaying: !state.isPlaying
-    })
-  }
-
   public render() {
     return (
-      <div className="App" onClick={this.onAppClick.bind(this)}>
+      <div className="App" onClick={this.onAppClick}>
         <h1 className="App-title">Come Get Your Podcast</h1>
 
         <p className="App-intro">
@@ -35,7 +44,7 @@ class App extends React.Component {
           <img src="hamster4.gif" title="Chris" alt="Chris"/>
         </p>
 
-        <audio ref="dodo" autoPlay={true} loop={true}>
+        <audio ref={this.setDodo} autoPlay={true} loop={true}>
           <source src="dodo.wav" type="audio/wav"/>
         </audio>
       </div>
