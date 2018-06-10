@@ -1,0 +1,15 @@
+{
+  "name": "cgyp-dot-com-server",
+  "version": "0.0.1",
+  "description": "The greatest podcast to ever have been featured in Obscure Sports Quarterly magazine",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "feed-to-json-promise": "^1.6.0",
+    "ts-node": "^6.1.0",
+    "typescript": "^2.9.1"
+  }
+}
