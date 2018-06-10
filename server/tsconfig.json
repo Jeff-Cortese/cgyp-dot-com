@@ -5,6 +5,7 @@
     "sourceMap": true,
     "allowJs": true,
     "moduleResolution": "node",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "typeRoots" : ["./node_modules/@types"]
   }
 }

@@ -1,4 +1,5 @@
 import * as Feed from 'feed-to-json-promise'
+import * as jsonfile from 'jsonfile';
 
 interface IEpisode {
   categories: string[];
@@ -16,10 +17,11 @@ interface IEpisode {
 
 (async function() {
   try {
-    const feedLoader = new Feed()
-    const feed = await feedLoader.load('http://cgypodcast.podbean.com/feed/')
+    const { items }: { items: IEpisode } =
+      await new Feed().load('http://cgypodcast.podbean.com/feed/');
 
-    console.log(feed);
+    jsonfile.writeFileSync(`./episodes.json`, items, { spaces: 2 });
+    console.log(items);
   } catch (error) {
     console.error(error)
   }
