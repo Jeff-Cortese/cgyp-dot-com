@@ -1,17 +1,45 @@
 import * as React from 'react';
-import * as xml2json from 'xml-js';
+import { Subject, timer } from 'rxjs';
+import { tap, takeUntil, withLatestFrom } from 'rxjs/operators';
+
 import './App.css';
+import { ComponentLifeCycle } from './ComponentLifyCycle';
 
 interface IAppState {
   isPlaying: boolean;
 }
 
-const log = console.log;
+const log = console.log; // TODO get logging library
+
+class Thing extends React.Component<{}, {}> {
+  constructor(props: any) {
+    super(props);
+
+    const lifeCycle = new ComponentLifeCycle(this);
+    lifeCycle.willMount$.pipe(
+      tap(() => {
+        log('test');
+      }),
+      takeUntil(lifeCycle.willUnmount$)
+    ).subscribe(() => {}, () => {}, () => log('complete'));
+  }
+
+  public componentWillMount() {
+    log('will mount')
+  }
+
+  public render() {
+    return (<div>yo</div>)
+  }
+}
 
 class App extends React.Component<{}, IAppState> {
   private dodo: HTMLAudioElement;
+  private things: any[] = [];
 
   public onAppClick = () => {
+    this.things.push({});
+
     const { isPlaying } = this.state;
     if (isPlaying) {
       this.dodo.pause();
@@ -25,26 +53,21 @@ class App extends React.Component<{}, IAppState> {
   }
 
   public setDodo = (el: HTMLAudioElement) => {
-    this.dodo = el; 
+    this.dodo = el;
   }
 
   public componentDidMount() {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); // TODO move elsewhere
     this.setState({
       isPlaying: !isMobile
     });
-
-    fetch('http://cgypodcast.podbean.com/feed/')
-      .then(response => response.text())
-      .then(text => {
-        const feed = xml2json.xml2json(text);
-        log(feed);
-      });
   }
 
   public render() {
+    const isPlaying = this.state && this.state.isPlaying
     return (
       <div className="App" onClick={this.onAppClick}>
+        {this.things.map((thing, i) => <Thing key={i}/>)}
         <h1 className="App-title">Come Get Your Podcast</h1>
 
         <p className="App-intro">

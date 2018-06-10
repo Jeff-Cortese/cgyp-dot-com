@@ -17,12 +17,13 @@ interface IEpisode {
 
 (async function() {
   try {
-    const { items }: { items: IEpisode } =
-      await new Feed().load('http://cgypodcast.podbean.com/feed/');
+    const { items }: { items: IEpisode } = await new Feed().load('http://cgypodcast.podbean.com/feed/');
 
     jsonfile.writeFileSync(`./episodes.json`, items, { spaces: 2 });
-    console.log(items);
   } catch (error) {
-    console.error(error)
+    console.error(error);
+    process.exit(1);
   }
+
+  process.exit(0);
 })();
