@@ -1,12 +1,14 @@
 import * as React from 'react';
+import * as xml2json from 'xml-js';
 import './App.css';
 
 interface IAppState {
   isPlaying: boolean;
 }
 
+const log = console.log;
+
 class App extends React.Component<{}, IAppState> {
-  public log = console.log;
   private dodo: HTMLAudioElement;
 
   public onAppClick = () => {
@@ -19,11 +21,11 @@ class App extends React.Component<{}, IAppState> {
 
     this.setState({
       isPlaying: !isPlaying
-    })
+    });
   }
 
   public setDodo = (el: HTMLAudioElement) => {
-    this.dodo = el;
+    this.dodo = el; 
   }
 
   public componentDidMount() {
@@ -31,6 +33,13 @@ class App extends React.Component<{}, IAppState> {
     this.setState({
       isPlaying: !isMobile
     });
+
+    fetch('http://cgypodcast.podbean.com/feed/')
+      .then(response => response.text())
+      .then(text => {
+        const feed = xml2json.xml2json(text);
+        log(feed);
+      });
   }
 
   public render() {

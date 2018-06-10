@@ -6,7 +6,8 @@
   "dependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-scripts-ts": "2.15.1"
+    "react-scripts-ts": "2.15.1",
+    "xml-js": "^1.6.4"
   },
   "scripts": {
     "start": "react-scripts-ts start",
