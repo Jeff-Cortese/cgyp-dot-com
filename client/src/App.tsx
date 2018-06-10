@@ -3,7 +3,7 @@ import { Subject, timer } from 'rxjs';
 import { tap, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import './App.css';
-import { ComponentLifeCycle } from './ComponentLifyCycle';
+import { ComponentLifeCycle } from './ComponentLifeCycle';
 
 interface IAppState {
   isPlaying: boolean;
