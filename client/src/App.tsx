@@ -11,35 +11,11 @@ interface IAppState {
 
 const log = console.log; // TODO get logging library
 
-class Thing extends React.Component<{}, {}> {
-  constructor(props: any) {
-    super(props);
-
-    const lifeCycle = new ComponentLifeCycle(this);
-    lifeCycle.willMount$.pipe(
-      tap(() => {
-        log('test');
-      }),
-      takeUntil(lifeCycle.willUnmount$)
-    ).subscribe(() => {}, () => {}, () => log('complete'));
-  }
-
-  public componentWillMount() {
-    log('will mount')
-  }
-
-  public render() {
-    return (<div>yo</div>)
-  }
-}
-
 class App extends React.Component<{}, IAppState> {
   private dodo: HTMLAudioElement;
-  private things: any[] = [];
+  private lifeCycle = new ComponentLifeCycle(this);
 
   public onAppClick = () => {
-    this.things.push({});
-
     const { isPlaying } = this.state;
     if (isPlaying) {
       this.dodo.pause();
@@ -67,7 +43,6 @@ class App extends React.Component<{}, IAppState> {
     const isPlaying = this.state && this.state.isPlaying
     return (
       <div className="App" onClick={this.onAppClick}>
-        {this.things.map((thing, i) => <Thing key={i}/>)}
         <h1 className="App-title">Come Get Your Podcast</h1>
 
         <p className="App-intro">

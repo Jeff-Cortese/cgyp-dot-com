@@ -1,7 +1,5 @@
 import { Subject } from 'rxjs';
 
-const noop = () => { /* nothing to do */ };
-
 export class ComponentLifeCycle {
   willMount$ = new Subject<any>();
   didMount$ = new Subject<any>();
@@ -11,24 +9,25 @@ export class ComponentLifeCycle {
   willReceiveProps$ = new Subject<any>();
 
   constructor(component: React.Component<any>) {
-    const monkeyPatchLifeCycle = (lifeCycleName: string, lifecycleSubject: Subject<any>, doesComplete?: boolean) => {
-      const oldLifeCylcleFn = component[lifeCycleName] || noop;
+    const monkeyPatchLifeCycle = (lifeCycleName: string, lifeCycleSubject: Subject<any>, doesComplete?: boolean) => {
+      const oldLifeCylcleFn = component[lifeCycleName];
 
       component[lifeCycleName] = function() {
-        lifecycleSubject.next(arguments);
+        lifeCycleSubject.next(arguments);
+
         if (doesComplete) {
-          lifecycleSubject.complete();
+          lifeCycleSubject.complete();
         }
 
-        return oldLifeCylcleFn.apply(component, arguments);
+        return oldLifeCylcleFn && oldLifeCylcleFn.apply(component, arguments);
       }
     }
 
     monkeyPatchLifeCycle('componentWillMount', this.willMount$, true);
     monkeyPatchLifeCycle('componentDidMount', this.didMount$, true);
     monkeyPatchLifeCycle('componentWillUnmount', this.willUnmount$, true);
-    monkeyPatchLifeCycle('componentWillUpdate', this.willUpdate$)
-    monkeyPatchLifeCycle('componentDidUpdate', this.didUpdate$)
-    monkeyPatchLifeCycle('componentWillReceiveProps', this.willReceiveProps$)
+    monkeyPatchLifeCycle('componentWillUpdate', this.willUpdate$);
+    monkeyPatchLifeCycle('componentDidUpdate', this.didUpdate$);
+    monkeyPatchLifeCycle('componentWillReceiveProps', this.willReceiveProps$);
   }
 }
