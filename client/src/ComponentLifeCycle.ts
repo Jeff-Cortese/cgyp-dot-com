@@ -1,12 +1,12 @@
 import { Subject } from 'rxjs';
 
 export class ComponentLifeCycle {
-  willMount$ = new Subject<any>();
-  didMount$ = new Subject<any>();
-  willUnmount$ = new Subject<any>();
-  willUpdate$ = new Subject<any>();
-  didUpdate$ = new Subject<any>();
-  willReceiveProps$ = new Subject<any>();
+  public willMount$ = new Subject<any>();
+  public didMount$ = new Subject<any>();
+  public willUnmount$ = new Subject<any>();
+  public willUpdate$ = new Subject<any>();
+  public didUpdate$ = new Subject<any>();
+  public willReceiveProps$ = new Subject<any>();
 
   constructor(component: React.Component<any>) {
     const monkeyPatchLifeCycle = (lifeCycleName: string, lifeCycleSubject: Subject<any>, doesComplete?: boolean) => {
