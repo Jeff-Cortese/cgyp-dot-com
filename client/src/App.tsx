@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { Subject, timer } from 'rxjs';
-import { tap, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import './App.css';
 import { ComponentLifeCycle } from './ComponentLifeCycle';
@@ -26,11 +24,11 @@ class App extends React.Component<{}, IAppState> {
     this.setState({
       isPlaying: !isPlaying
     });
-  }
+  };
 
   public setDodo = (el: HTMLAudioElement) => {
     this.dodo = el;
-  }
+  };
 
   public componentDidMount() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); // TODO move elsewhere
@@ -40,7 +38,6 @@ class App extends React.Component<{}, IAppState> {
   }
 
   public render() {
-    const isPlaying = this.state && this.state.isPlaying
     return (
       <div className="App" onClick={this.onAppClick}>
         <h1 className="App-title">Come Get Your Podcast</h1>

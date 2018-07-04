@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Subject } from 'rxjs';
 
 export class ComponentLifeCycle {
@@ -10,7 +11,7 @@ export class ComponentLifeCycle {
 
   constructor(component: React.Component<any>) {
     const monkeyPatchLifeCycle = (lifeCycleName: string, lifeCycleSubject: Subject<any>, doesComplete?: boolean) => {
-      const oldLifeCylcleFn = component[lifeCycleName];
+      const oldLifeCycleFn = component[lifeCycleName];
 
       component[lifeCycleName] = function() {
         lifeCycleSubject.next(arguments);
@@ -19,9 +20,9 @@ export class ComponentLifeCycle {
           lifeCycleSubject.complete();
         }
 
-        return oldLifeCylcleFn && oldLifeCylcleFn.apply(component, arguments);
+        return oldLifeCycleFn && oldLifeCycleFn.apply(component, arguments);
       }
-    }
+    };
 
     monkeyPatchLifeCycle('componentWillMount', this.willMount$, true);
     monkeyPatchLifeCycle('componentDidMount', this.didMount$, true);
