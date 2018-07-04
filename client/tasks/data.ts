@@ -1,5 +1,5 @@
-import * as Feed from 'feed-to-json-promise'
 import * as jsonfile from 'jsonfile';
+const Feed = require('feed-to-json-promise');
 
 interface IEpisode {
   categories: string[];
@@ -19,7 +19,7 @@ interface IEpisode {
   try {
     const { items }: { items: IEpisode } = await new Feed().load('http://cgypodcast.podbean.com/feed/');
 
-    jsonfile.writeFileSync(`./episodes.json`, items, { spaces: 2 });
+    jsonfile.writeFileSync(`./public/episodes.json`, items, { spaces: 2 });
   } catch (error) {
     console.error(error);
     process.exit(1);

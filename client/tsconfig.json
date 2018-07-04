@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "outDir": "build/dist",
-    "module": "esnext",
+    "module": "commonjs",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "es2017", "dom"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
@@ -14,7 +14,9 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "typeRoots" : ["./node_modules/@types"]
   },
   "exclude": [
     "node_modules",

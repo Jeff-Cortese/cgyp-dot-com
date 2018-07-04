@@ -10,18 +10,23 @@
     "rxjs": "^6.2.0"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "data": "ts-node ./tasks/data.ts",
+    "start": "npm run data && react-scripts-ts start",
+    "build": "npm run data && react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
-    "@types/jest": "^22.2.3",
-    "@types/node": "^6.0.110",
-    "@types/react": "^16.3.14",
-    "@types/react-dom": "^16.0.5",
-    "gh-pages": "^1.1.0",
-    "typescript": "^2.8.3"
+    "@types/jest": "22.2.3",
+    "@types/jsonfile": "4.0.1",
+    "@types/node": "6.0.110",
+    "@types/react": "16.3.14",
+    "@types/react-dom": "16.0.5",
+    "gh-pages": "1.1.0",
+    "feed-to-json-promise": "1.6.0",
+    "jsonfile": "4.0.0",
+    "ts-node": "6.1.0",
+    "typescript": "2.8.3"
   }
 }

@@ -9,6 +9,7 @@
 
 # production
 /build
+public/episodes.json
 
 # misc
 .DS_Store
